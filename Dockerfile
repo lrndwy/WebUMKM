@@ -20,6 +20,6 @@ FROM nginx:stable-alpine AS production
 # Copy the built application files from the builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 3000
 
 CMD ["nginx", "-g", "daemon off;"]
