@@ -12,14 +12,17 @@ COPY . .
 RUN pnpm run build
 
 # Stage 2: Serve the application with Nginx
-FROM nginx:stable-alpine AS production
+FROM node:20-alpine AS production
 
-# Copy custom Nginx configuration (optional, but good practice)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install serve
+RUN npm install -g serve
 
 # Copy the built application files from the builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /app/dist
+
+# Set working directory to the built application files
+WORKDIR /app/dist
 
 EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "."]
