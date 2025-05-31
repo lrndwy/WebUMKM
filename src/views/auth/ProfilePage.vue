@@ -89,7 +89,7 @@
         updateMessage.value = null
 
         try {
-            await pb.collection('users').update(authStore.currentUser.value.id, {
+            await pb.collection('users').update(authStore.currentUser.value!.id, {
 
         })
 
