@@ -2,7 +2,7 @@
 import PocketBase from 'pocketbase'
 
 // Ganti dengan URL PocketBase server Anda
-const pb = new PocketBase('/api')
+const pb = new PocketBase(import.meta.env.VITE_PB_URL)
 
 // Interface untuk User
 export interface User {
