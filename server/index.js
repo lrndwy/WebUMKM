@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const fetch = require('node-fetch'); // For making HTTP requests from Node.js
+import express from 'express';
+import cors from 'cors';
+// Node.js 18+ has native fetch, so no need for node-fetch package
 const app = express();
 const port = process.env.PORT || 3001; // Use a different port than the frontend
 
@@ -42,8 +42,8 @@ app.all('/proxy-rajaongkir/*', async (req, res) => {
 
         console.log(`Proxying request to: ${fullTargetUrl}`);
         console.log(`Method: ${req.method}`);
-        console.log(`Headers:`, req.headers);
-        console.log(`Body:`, req.body);
+        // console.log(`Headers:`, req.headers); // Too verbose for production logs
+        // console.log(`Body:`, req.body); // Too verbose for production logs
 
         const headers = {
             'key': rajaOngkirApiKey,

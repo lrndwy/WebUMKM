@@ -16,6 +16,9 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
+# Install serve globally for the frontend
+RUN npm install -g serve
+
 # Copy package.json and pnpm-lock.yaml for proxy dependencies
 COPY package.json pnpm-lock.yaml ./
 
