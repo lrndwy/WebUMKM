@@ -30,12 +30,13 @@ export const useAuthStore = () => {
   const currentUser = computed(() => state.user)
   const isLoading = computed(() => state.loading)
   const error = computed(() => state.error)
+  const userRoles = computed(() => state.user?.roles || [])
 
   // Actions
   const login = async (email: string, password: string) => {
     state.loading = true
     state.error = null
-    
+
     try {
       const user = await AuthService.login(email, password)
       state.user = user
@@ -51,7 +52,7 @@ export const useAuthStore = () => {
   const register = async (email: string, password: string, passwordConfirm: string, name?: string) => {
     state.loading = true
     state.error = null
-    
+
     try {
       const user = await AuthService.register(email, password, passwordConfirm, name)
       state.user = user
@@ -70,11 +71,6 @@ export const useAuthStore = () => {
     state.error = null
   }
 
-  const refreshAuth = async () => {
-    const isValid = await AuthService.refreshAuth()
-    // The state.user will be updated by the onAuthStoreChange listener
-    return isValid
-  }
 
   const clearError = () => {
     state.error = null
@@ -95,7 +91,7 @@ export const useAuthStore = () => {
       throw err;
     }
   }
-    
+
 
   return {
     // State
@@ -103,13 +99,14 @@ export const useAuthStore = () => {
     currentUser,
     isLoading,
     error,
+    userRoles,
 
     // Actions
     login,
     register,
     logout,
-    refreshAuth,
     clearError,
-    sendVerificationEmail
+    sendVerificationEmail,
+    refreshAuth: AuthService.refreshAuth // Expose refreshAuth
   }
 }

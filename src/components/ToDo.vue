@@ -13,15 +13,15 @@
       </div>
     </div>
   </template>
-  
+
   <script lang="ts">
   import { ref, onMounted } from 'vue'
   import PocketBase from 'pocketbase'
-  
+
   // Inisialisasi PocketBase
   // @ts-ignore: Vetur might not recognize import.meta.env correctly
   const pb = new PocketBase(import.meta.env.VITE_PB_URL)
-  
+
   // Definisikan tipe data untuk koleksi toDo
   interface ToDoRecord {
     id: string
@@ -30,13 +30,13 @@
     created: string
     [key: string]: any
   }
-  
+
   export default {
     setup() {
       const todos = ref<ToDoRecord[]>([])
       const loading = ref(true)
       const error = ref('')
-  
+
       const fetchToDoList = async () => {
         try {
           const records = await pb.collection('toDo').getFullList<ToDoRecord>({
@@ -50,11 +50,11 @@
           console.error('Error:', err)
         }
       }
-  
+
       onMounted(() => {
         fetchToDoList()
       })
-  
+
       return {
         todos,
         loading,
@@ -63,8 +63,5 @@
     }
   }
   </script>
-  
-  
-  <style>
-  /* Tailwind classes will handle all styling */
-  </style>
+
+

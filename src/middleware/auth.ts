@@ -4,33 +4,21 @@ import { AuthService } from '../lib/pocketbase'
 
 // Middleware untuk memerlukan autentikasi
 export const requireAuth: NavigationGuard = async (to, _from, next) => {
-  // Refresh token jika ada
-  if (AuthService.isAuthenticated()) {
-    const isValid = await AuthService.refreshAuth()
-    if (!isValid) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-      return
-    }
-  }
 
-  if (!AuthService.isAuthenticated()) {
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    next()
-  }
-}
+    if (!AuthService.isAuthenticated()) {
+            next({
+            path: '/login',
+            query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    }
 
 // Middleware untuk redirect jika sudah login
 export const redirectIfAuth: NavigationGuard = async (_to, _from, next) => {
   if (AuthService.isAuthenticated()) {
-    await AuthService.refreshAuth()
-    
+
     if (AuthService.isAuthenticated()) {
       next('/dashboard')
     } else {
@@ -50,7 +38,7 @@ export const requireRole = (role: string): NavigationGuard => {
     }
 
     const user = AuthService.getCurrentUser()
-    if (!user || (user as any).role !== role) {
+    if (!user || !user.roles || !user.roles.includes(role)) {
       next('/unauthorized') // Buat halaman unauthorized
       return
     }
