@@ -17,7 +17,7 @@ const searchOrigin = ref('');
 const originResults = ref<RajaOngkirDestination[]>([]);
 const selectedOrigin = ref<RajaOngkirDestination | null>(null);
 
-const RAJAONGKIR_BASE_URL = '/rajaongkir'; // Sesuaikan dengan proxy Anda
+const RAJAONGKIR_BASE_URL = import.meta.env.VITE_RAJAONGKIR_URL; // Use absolute URL for production
 const RAJAONGKIR_API_KEY = import.meta.env.VITE_RAJAONGKIR_API_KEY; // Pastikan ini tersedia di .env
 
 let searchTimeout: ReturnType<typeof setTimeout> | null = null;

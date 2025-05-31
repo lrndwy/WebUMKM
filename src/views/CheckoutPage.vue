@@ -445,7 +445,7 @@ const shippingCostLoading = ref(false)
 const shippingCostError = ref<string | null>(null)
 const selectedShippingService = ref<RajaOngkirCost | null>(null)
 
-const RAJAONGKIR_BASE_URL = '/rajaongkir'
+const RAJAONGKIR_BASE_URL = import.meta.env.VITE_RAJAONGKIR_URL
 
 const RAJAONGKIR_API_KEY = import.meta.env.VITE_RAJAONGKIR_API_KEY;
 
