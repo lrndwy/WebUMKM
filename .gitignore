@@ -8,11 +8,18 @@ pnpm-debug.log*
 lerna-debug.log*
 
 client/node_modules
+server/node_modules
+node_modules
+
+pnpm-lock.yaml
+server/pnpm-lock.yaml
+client/pnpm-lock.yaml
 dist
 dist-ssr
 *.local
 
 # Editor directories and files
+.vscode
 .vscode/*
 !.vscode/extensions.json
 .idea
