@@ -4,25 +4,26 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
+COPY client/package.json client/pnpm-lock.yaml client/
+COPY server/package.json server/pnpm-lock.yaml server/
 
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
+RUN npm install -g pnpm && \
+    pnpm install --frozen-lockfile && \
+    pnpm install --prefix client --frozen-lockfile && \
+    pnpm install --prefix server --frozen-lockfile
 
 COPY . .
 
-RUN pnpm run build
+RUN pnpm --prefix client run build
 
-# Stage 2: Serve the application with Nginx
+# Stage 2: Run the application
 FROM node:20-alpine AS production
 
-# Install serve
-RUN npm install -g serve
+COPY --from=builder /app /app
 
-# Copy the built application files from the builder stage
-COPY --from=builder /app/dist /app/dist
-
-# Set working directory to the built application files
-WORKDIR /app/dist
+WORKDIR /app
 
 EXPOSE 3000
+EXPOSE 8080
 
-CMD ["serve", "-s", "."]
+CMD ["pnpm", "start"]
