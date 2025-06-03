@@ -3,14 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-COPY client/package.json client/pnpm-lock.yaml client/
-COPY server/package.json server/pnpm-lock.yaml server/
+COPY package.json ./
+COPY client/package.json client/
+COPY server/package.json server/
 
 RUN npm install -g pnpm && \
-    pnpm install --frozen-lockfile && \
-    pnpm install --prefix client --frozen-lockfile && \
-    pnpm install --prefix server --frozen-lockfile
+    pnpm install && \
+    pnpm install --prefix client && \
+    pnpm install --prefix server
 
 COPY . .
 
