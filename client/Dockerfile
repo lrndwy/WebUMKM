@@ -25,11 +25,14 @@ FROM node:20-alpine AS production
 # Set working directory
 WORKDIR /app
 
+# Install pnpm globally
+RUN npm install -g pnpm
+
 # Copy package.json and pnpm-lock.yaml to install serve
 COPY package.json pnpm-lock.yaml* ./
 
 # Install production dependencies, including 'serve'
-RUN pnpm install 
+RUN pnpm install
 
 # Copy the built application from the build stage
 COPY --from=build /app/dist ./dist
