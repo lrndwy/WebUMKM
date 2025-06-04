@@ -1,18 +1,18 @@
 # Stage 1: Build the Vue.js application
 FROM node:20-alpine AS builder
 
-WORKDIR /app
+WORKDIR /app/client
 
+COPY ../package.json ../
 COPY package.json ./
-COPY client/package.json client/
 
 RUN npm install -g pnpm && \
-    pnpm install && \
-    pnpm install --prefix client
+    pnpm install ../ && \
+    pnpm install
 
-COPY client/ .
+COPY . .
 
-RUN pnpm --prefix client run build
+RUN pnpm run build
 
 # Stage 2: Run the application
 FROM node:20-alpine AS production
