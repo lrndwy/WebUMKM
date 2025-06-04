@@ -5,7 +5,6 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig(() => {
   return {
-    envDir: '../', // Specify the root directory for .env files
     plugins: [vue(), tailwindcss()],
     resolve: {
       alias: {
