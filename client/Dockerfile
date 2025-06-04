@@ -29,7 +29,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 
 # Install production dependencies, including 'serve'
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install 
 
 # Copy the built application from the build stage
 COPY --from=build /app/dist ./dist
