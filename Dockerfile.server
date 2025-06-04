@@ -17,6 +17,6 @@ COPY --from=server_builder /app/server /app/server
 
 WORKDIR /app/server
 
-EXPOSE 8080
+EXPOSE 8888
 
 CMD ["pnpm", "start"]
