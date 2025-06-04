@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile.server
     ports:
-      - "8080:8080"
+      - "8888:8888"
     volumes:
       - ./server:/app/server
       - /app/server/node_modules # Exclude node_modules from host mount
