@@ -26,4 +26,4 @@ WORKDIR /app
 EXPOSE 3000
 EXPOSE 8080
 
-CMD ["pnpm", "start"]
+CMD ["concurrently", "pnpm --prefix client serve", "pnpm --prefix server start"]
