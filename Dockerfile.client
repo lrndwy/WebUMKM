@@ -5,25 +5,22 @@ WORKDIR /app
 
 COPY package.json ./
 COPY client/package.json client/
-COPY server/package.json server/
 
 RUN npm install -g pnpm && \
     pnpm install && \
     pnpm install --prefix client && \
-    pnpm install --prefix server
 
-COPY . .
+COPY client/ .
 
 RUN pnpm --prefix client run build
 
 # Stage 2: Run the application
 FROM node:20-alpine AS production
 
-COPY --from=builder /app /app
+COPY --from=builder /app/client /app/client
 
-WORKDIR /app
+WORKDIR /app/client
 
 EXPOSE 3000
-EXPOSE 8080
 
-CMD ["concurrently", "pnpm --prefix client serve", "pnpm --prefix server start"]
+CMD ["pnpm", "run", "serve"]

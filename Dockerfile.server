@@ -1,0 +1,22 @@
+# Stage 1: Build the Node.js server application
+FROM node:20-alpine AS server_builder
+
+WORKDIR /app/server
+
+COPY server/package.json ./
+
+RUN npm install -g pnpm && \
+    pnpm install
+
+COPY server/index.js ./
+
+# Stage 2: Run the server application
+FROM node:20-alpine AS production_server
+
+COPY --from=server_builder /app/server /app/server
+
+WORKDIR /app/server
+
+EXPOSE 8080
+
+CMD ["pnpm", "start"]
