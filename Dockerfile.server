@@ -1,7 +1,7 @@
 # Stage 1: Build the Node.js server application
 FROM node:20-alpine AS server_builder
 
-WORKDIR /app/server
+WORKDIR /app
 
 COPY server/package.json ./
 
@@ -13,9 +13,9 @@ COPY server/index.js ./
 # Stage 2: Run the server application
 FROM node:20-alpine AS production_server
 
-COPY --from=server_builder /app/server /app/server
+COPY --from=server_builder /app /app
 
-WORKDIR /app/server
+WORKDIR /app
 
 EXPOSE 8888
 
